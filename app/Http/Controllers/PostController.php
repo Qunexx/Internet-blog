@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Models\Category;
 use App\Models\PostTag;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Services\Post\PostService;
 
 
 class PostController extends Controller
 {
+    public $postService;
+    public function __construct(PostService $postService) {
+        $this->postService = $postService;
+    }
+
     public function index(){
         $posts = Post::all();
 
@@ -27,20 +35,10 @@ class PostController extends Controller
         return view("post.create", compact("categories","tags"));
     }
 
-    public function store(){
+    public function store(StoreRequest $request){
 
-        $data = request()->validate([
-            "title"=> "string",
-            "post_content"=> "string",
-            "image"=> "string",
-            "category_id" => "",
-            "tags"=>"",
-        ]);
-        $tags=$data['tags'];
-        unset($data['tags']);
-        $post=Post::create($data);
-        $post->tags()->attach($tags);
-        
+        $data = $request->validated();
+        $this->postService->store($data);
         return redirect()->route('posts.index');
     }
 
@@ -53,21 +51,17 @@ class PostController extends Controller
 
     public function edit(Post $post){
         $categories = Category::all();
+        $tags = Tag::all();
        
-        return view("post.edit", compact("post","categories"));
+        return view("post.edit", compact("post","categories","tags"));
 
 
     }
 
 
-    public function update(Post $post){
-        $data = request()->validate([
-            "title"=> "string",
-            "post_content"=> "string",
-            "image"=> "string",
-            "category_id" => "",
-        ]);
-        $post->update($data);
+    public function update(UpdateRequest $request,Post $post){
+        $data = $request->validated();
+        $this->postService->update($post, $data);
         return redirect()->route('post.show', $post->id);
         
 
