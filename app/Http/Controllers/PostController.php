@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\PostFilter;
+use App\Http\Requests\FilterRequest;
 use App\Http\Requests\StoreRequest;
 use App\Http\Requests\UpdateRequest;
 use App\Models\Category;
 use App\Models\PostTag;
 use Illuminate\Http\Request;
+use App\Providers\AppServiceProvider;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\Post\PostService;
+use Illuminate\Pagination\Paginator;
 
 
 class PostController extends Controller
@@ -19,16 +23,15 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    public function index(){
-        $posts = Post::all();
+    public function index(FilterRequest $request){
+        $data = $request->validated();
+        $filter = app()->make(PostFilter::class,['queryParams' => array_filter($data)]);
+        $posts = Post::filter($filter)->paginate(10);
+        $categories = Category::all();
 
-        // TODO: допилить категории и тэги
-        // $category= Category::find(1);
-        // $post = Post::find(1);
-        // dd($post->tags);
-        return view("post.index", compact("posts"));
+        return view("post.index", compact("posts","categories"));
     }
-    
+
     public function create(){
         $categories = Category::all();
         $tags = Tag::all();
@@ -46,13 +49,13 @@ class PostController extends Controller
         return view("post.show", compact("post"));
 
 
-    }   
+    }
 
 
     public function edit(Post $post){
         $categories = Category::all();
         $tags = Tag::all();
-       
+
         return view("post.edit", compact("post","categories","tags"));
 
 
@@ -63,7 +66,7 @@ class PostController extends Controller
         $data = $request->validated();
         $this->postService->update($post, $data);
         return redirect()->route('post.show', $post->id);
-        
+
 
 }
 
