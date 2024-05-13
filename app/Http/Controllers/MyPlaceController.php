@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class MyPlaceController extends Controller
 {
-    public function hello(){
-        return ("Привет!");
+    public function index(){
+        return view('main');
     }
 }
