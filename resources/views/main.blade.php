@@ -2,5 +2,5 @@
 @section('content')
 <div>
    This is Main page
-</div class>
+</div>
 @endsection

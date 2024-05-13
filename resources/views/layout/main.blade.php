@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     @vite('resources/js/app.js')
-    
+
 </head>
 <body>
 <div>
@@ -14,6 +14,11 @@
         <ul
             class="nav justify-content-center"
         >
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('main.index')}}" aria-current="page"
+                >Main</a
+                >
+            </li>
             <li class="nav-item">
                 <a class="nav-link active" href="{{ route('profile.index')}}" aria-current="page"
                     >Profile</a
@@ -34,7 +39,7 @@
                     >AuthStatus</a
                 >
             </li>
-            
+
         </ul>
         </nav>
     </div>
