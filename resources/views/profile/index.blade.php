@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Profile Page</h1>
+        <h1>Welcome to your Profile Page</h1>
         @if (auth()->check())
             @php
                 $profile = auth()->user()->profile;
@@ -16,6 +16,36 @@
                 <p><strong>VK:</strong> {{ $profile->vk }}</p>
                 <p><strong>Telegram:</strong> {{ $profile->telegram }}</p>
                 <p><strong>GitHub:</strong> {{ $profile->github }}</p>
+
+
+
+                <h3>Your posts:</h3>
+                @if($profile->user->posts->count())
+                    <a href="{{route('post.create')}}"> You don't have any post's yet, but you can change it! Make your first!(click on the link) </a>
+
+                @else
+                    <div class="row">
+                        @foreach ($posts as $post)
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $post->title }}</h5>
+                                        {{$post->likes}}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                        </svg>
+                                        <p class="card-text">{{ Str::limit($post->content, 6) }}</p>
+                                        <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        {{ $posts->links() }}
+                    </div>
+
+                @endif
+
             @else
                 <h2>You are for the first time here, please fill the fields of your profile to be open to the community</h2>
                 @if (session('success'))

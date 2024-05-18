@@ -21,7 +21,10 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('profile.index');
+        $userId=auth()->id();
+        $profile = Profile::findOrFail($userId);
+        $posts = $profile->user->posts()->paginate(6);
+        return view('profile.index',compact('posts'));
     }
 
     public function create(ProfileStoreRequest $request)
@@ -39,7 +42,8 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile = Profile::findOrFail($id);
-        return view('profile.show', compact('profile'));
+        $posts = $profile->user->posts()->paginate(6);
+        return view('profile.show', compact('profile', 'posts'));
     }
 
     }
