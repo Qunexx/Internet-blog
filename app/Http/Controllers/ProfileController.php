@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('profile');
+        return view('profile.index');
     }
 
     public function create(ProfileStoreRequest $request)
@@ -32,6 +32,14 @@ class ProfileController extends Controller
         $data = $request->validated();
         $this->profileService->store($data);
 
-        return redirect()->route('profile')->with('success', 'Profile created successfully.');
+        return redirect()->route('profile.index')->with('success', 'Profile created successfully.');
     }
-}
+
+
+    public function show($id)
+    {
+        $profile = Profile::findOrFail($id);
+        return view('profile.show', compact('profile'));
+    }
+
+    }

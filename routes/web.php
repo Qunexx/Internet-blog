@@ -22,6 +22,7 @@ Route::get('/auth',[AuthController::class,'AuthStatus'])->name('authcheck.index'
 
 Route::get('/profile',[ProfileController::class,'index'])->name('profile.index');
 Route::post('/profile/create',[ProfileController::class,'create'])->name('profile.create');
+Route::get('/profile/{profile}',[ProfileController::class,'show'])->name('profile.show');
 
 
 
