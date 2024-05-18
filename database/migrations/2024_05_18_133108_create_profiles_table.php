@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('birthday')->nullable();
-            $table->text('quote')->nullable();
-            $table->text('bio')->nullable();
-            $table->string('vk')->nullable();
-            $table->string('telegram')->nullable();
-            $table->string('github')->nullable();
+            $table->string('quote')->charset('utf8mb4')->nullable();
+            $table->string('bio')->charset('utf8mb4')->nullable();
+            $table->string('vk')->charset('utf8mb4')->nullable();
+            $table->string('telegram')->charset('utf8mb4')->nullable();
+            $table->string('github')->charset('utf8mb4')->nullable();
 
             $table->timestamps();
         });

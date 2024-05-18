@@ -13,7 +13,7 @@ class ProfileService
             $profile = new Profile();
             $profile->user_id = auth()->id();
             $profile->birthday = $data['birthday'] ?? null;
-            $profile->quote = 'The best user of the best site';
+            $profile->quote = $data['quote'] ?? 'The best user of the best site';
             $profile->bio = $data['bio'] ?? null;
             $profile->vk = $data['vk'] ?? null;
             $profile->telegram = $data['telegram'] ?? null;
