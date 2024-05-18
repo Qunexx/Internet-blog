@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\AdminPanelMiddleware;
 
 
 Route::get('/',[HomeController::class,'index'])->name('main.index');
@@ -34,7 +35,7 @@ Route::post('/logout', function () {
 
 
 
-Route::get('/admin',[AdminController::class,'index'])->name('admin.index')->middleware('auth');
+Route::get('/admin',[AdminController::class,'index'])->middleware(AdminPanelMiddleware::class)->name('admin.index');
 
 
 Route::get('/posts/delete',[PostController::class,'Delete']);

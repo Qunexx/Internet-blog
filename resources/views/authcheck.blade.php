@@ -3,6 +3,13 @@
     @csrf
     @method('post')
 <div class="container">
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <h1>Authentication Status</h1>
     <p>Status:  {{ $status }}</p> <!-- Отображение статуса аутентификации -->
 

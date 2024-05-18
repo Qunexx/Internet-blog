@@ -15,9 +15,10 @@ class AdminPanelMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //todo: допилить миддлвейр
 
-        dd(auth());
+        if(auth()->user()->role!== 'admin'){
+        return redirect()->route('authcheck.index')->with('error', 'У вас недостаточно прав доступа для перехода по пути ./admin');
+        }
         return $next($request);
     }
 }
