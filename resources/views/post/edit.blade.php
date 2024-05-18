@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('content')
 <div class="center-both">
+    <h1>Post editing form</h1>
     <form action="{{ route('post.update',$post->id)}}" method="post">
       @csrf
       @method('patch')
@@ -29,13 +30,13 @@
           @foreach($categories as $category)
           <option {{$category->id === $post->category->id ? 'selected' : '' }} value="{{$category->id}}">{{$category->title}}</option>
           @endforeach
-          
+
         </select>
 
         <select class="form-select mb-3" multiple aria-label="tags" name="tags[]">
           @foreach($tags as $tag)
-          <option 
-          @foreach($post->tags as $postTag ) 
+          <option
+          @foreach($post->tags as $postTag )
           {{ $tag -> id === $postTag->id ? 'selected' : ''}}
           @endforeach
           value="{{$tag->id}}">{{$tag->title}}</option>

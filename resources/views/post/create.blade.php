@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('content')
 <div class="center-both">
+    <h1>Post creating form</h1>
     <form action="{{ route('post.store') }}" method="post">
       @csrf
         <div class="mb-3">
@@ -26,10 +27,10 @@
         </div>
         <select class="form-select mb-3" aria-label="Category" name="category_id">
           @foreach($categories as $category)
-          <option 
+          <option
           {{old('category_id') == $category->id ? 'selected' : '' }} value="{{$category->id}}">{{$category->title}}</option>
           @endforeach
-          
+
         </select>
         <select class="form-select mb-3" multiple aria-label="tags" name="tags[]">
           @foreach($tags as $tag)
