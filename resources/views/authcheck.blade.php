@@ -2,16 +2,31 @@
 @section('content')
     @csrf
     @method('post')
-<div>
+<div class="container">
     <h1>Authentication Status</h1>
-    <p>{{ $status }}</p> <!-- Отображение статуса аутентификации -->
+    <p>Status:  {{ $status }}</p> <!-- Отображение статуса аутентификации -->
 
     @if($status == 'Authentificated')
-        <p>Welcome, you are logged in!</p>
+        <p>Welcome, <span class="fw-bold text-primary">{{ Auth::user()->name }}</span>! You are logged in!</p>
+
     @else
-        <p>You are not logged in. Please <a href="/login">login</a> or <a href="/register">register</a>.</p>
+        <p>Dear guest, you are not logged in. Please <a href="/login">login</a> or <a href="/register">register</a>.</p>
     @endif
 
-    <a href="{{ route('logout') }}" class="btn btn-primary mb-3">Logout</a>
+
+
+            @if($status == 'Authentificated')
+            <a>You can logout by press to the button  </a>
+                <form action="{{route('logout')}}" method="POST" >
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            @else
+            <a>You are Guest </a>
+            @endif
+
+
+
+
 </div>
 @endsection

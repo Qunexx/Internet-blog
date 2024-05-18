@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-<div>
+<div class="container">
    This is Profile page
 </div>
 @endsection
