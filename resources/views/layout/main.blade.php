@@ -30,6 +30,12 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ route('authcheck.index') }}" aria-current="page">AuthStatus</a>
                         </li>
+                        @if (auth()->user() != null and auth()->user()->role == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{{ route('admin.index') }}" aria-current="page">AdminPanel</a>
+                            </li>
+                        @endif
+
                     </ul>
                 </div>
 
