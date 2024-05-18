@@ -16,9 +16,10 @@ class AdminPanelMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(auth()->user()->role!== 'admin'){
-        return redirect()->route('authcheck.index')->with('error', 'У вас недостаточно прав доступа для перехода по пути ./admin');
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            return redirect()->route('authcheck.index')->with('error', 'У вас недостаточно прав доступа для перехода по пути ./admin');
         }
+        
         return $next($request);
     }
 }
