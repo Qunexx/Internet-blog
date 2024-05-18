@@ -5,9 +5,12 @@
         <p>Hello! This is the posts page</p>
 
         <div class="d-flex align-items-start">
+            @if (auth()->check())
             <div class="mr-5">
                 <a href="{{ route('post.create') }}" class="btn btn-primary mb-3">Add post</a>
             </div>
+            @endif
+
             <div class="ms-lg-5">
                 <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
                 <input type="text" class="form-control mr-2" name="title" placeholder="Title" value="{{ request('title') }}">

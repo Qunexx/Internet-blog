@@ -27,14 +27,14 @@ Route::post('/profile/create',[ProfileController::class,'create'])->name('profil
 
 
 Route::get('/posts',[PostController::class,'index'])->name('posts.index');
-Route::get('/posts/create',[PostController::class,'create'])->name('post.create');
-Route::post('/posts',[PostController::class,'store'])->name('post.store');
+Route::get('/posts/create',[PostController::class,'create'])->name('post.create')->middleware('auth');
+Route::post('/posts',[PostController::class,'store'])->name('post.store')->middleware('auth');
 Route::get('/posts/{post}',[PostController::class,'show'])->name('post.show');
-Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('post.edit');
-Route::patch('/posts/{post}',[PostController::class,'update'])->name('post.update');
-Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('post.delete');
+Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('post.edit')->middleware('auth');
+Route::patch('/posts/{post}',[PostController::class,'update'])->name('post.update')->middleware('auth');
+Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('post.delete')->middleware('auth');
 
-//Route::post('/logout',[LoginController::class,'logout'])->name('logout');
+
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('authcheck.index');  // Перенаправление на главную страницу после выхода

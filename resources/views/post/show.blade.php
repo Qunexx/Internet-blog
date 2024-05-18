@@ -6,7 +6,7 @@
     <div>{{$post->post_content}}</div>
     <div>Likes:{{$post->likes }} </div>
 
-
+    @if (auth()->check())
     <div>
         <form action="{{route('post.edit',$post->id)}}" method="get">
             @csrf
@@ -20,6 +20,7 @@
             <input type="submit" value="Delete" class="btn btn-danger">
         </form>
     </div>
+    @endif
     <div>
         <a href="{{route('posts.index')}}">Back</a>
     </div>
