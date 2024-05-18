@@ -18,7 +18,14 @@ Route::get('/',[HomeController::class,'index'])->name('main.index');
 
 Route::get('/main',[MyPlaceController::class,'index'])->name('main.index');
 Route::get('/auth',[AuthController::class,'AuthStatus'])->name('authcheck.index');
+
+
 Route::get('/profile',[ProfileController::class,'index'])->name('profile.index');
+Route::post('/profile/create',[ProfileController::class,'create'])->name('profile.create');
+
+
+
+
 Route::get('/posts',[PostController::class,'index'])->name('posts.index');
 Route::get('/posts/create',[PostController::class,'create'])->name('post.create');
 Route::post('/posts',[PostController::class,'store'])->name('post.store');
@@ -38,9 +45,6 @@ Route::post('/logout', function () {
 Route::get('/admin',[AdminController::class,'index'])->middleware(AdminPanelMiddleware::class)->name('admin.index');
 
 
-Route::get('/posts/delete',[PostController::class,'Delete']);
-Route::get('/posts/firstorcreate',[PostController::class,'firstOrCreate']);
-Route::get('/posts/updateorcreate',[PostController::class,'updateOrCreate']);
 Route::get('/contacts',[ContactController::class,'ShowContacts'])->name('contacts.index');
 
 Auth::routes();
