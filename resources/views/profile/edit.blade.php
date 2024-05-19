@@ -40,7 +40,7 @@
             <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
         <div>
-            <a class="fs-3" href="{{route('profile.index')}}">Back</a>
+            <a class="fs-3" href="{{url()->previous() }}">Back</a>
         </div>
     </div>
 @endsection

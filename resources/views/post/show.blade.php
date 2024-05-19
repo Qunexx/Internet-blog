@@ -9,6 +9,34 @@
                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
             </svg>
         </div>
+        @if((auth()->check()))
+            @if ($post->isLikedBy(auth()->user()))
+                <form action="{{ route('posts.unlike', $post) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-link p-0 m-0" style="color: red; font-size: 1.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                    </button>
+                </form>
+            @else
+                <form action="{{ route('posts.like', $post) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-link p-0 m-0" style="color: grey; font-size: 1.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="M8 2.748-.717-3.4C5.6-4.992 11.2 2.748 8 6.748-3.8 2.748 5.6 2.748 8 2.748zM4.5 8.5L7.5 12L12 8L8 4L4.5 8.5z"/>
+                        </svg>
+                    </button>
+                </form>
+            @endif
+        @else
+            <button class="btn btn-link p-0 m-0" style="color: grey; font-size: 1.5rem;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="M8 2.748-.717-3.4C5.6-4.992 11.2 2.748 8 6.748-3.8 2.748 5.6 2.748 8 2.748zM4.5 8.5L7.5 12L12 8L8 4L4.5 8.5z"/>
+                </svg>
+            </button>
+        @endif
 
         @if ($post->user)
             <div>Author: <a href="{{ route('profile.show', $postOwnerProfileId) }}">{{ $post->user->name }}</a></div>
@@ -53,7 +81,7 @@
         @endif
 
         <div>
-            <a href="{{ route('posts.index') }}">Back</a>
+            <a href="{{ url()->previous()  }}">Back</a>
         </div>
     </div>
 @endsection
