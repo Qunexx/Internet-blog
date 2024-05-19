@@ -4,9 +4,6 @@
     <div class="container">
         <h1>Welcome to your Profile Page</h1>
         @if (auth()->check())
-            @php
-                $profile = auth()->user()->profile;
-            @endphp
 
             @if ($profile)
                 <h2>{{ auth()->user()->name }}'s Profile</h2>
@@ -20,7 +17,7 @@
 
 
                 <h3>Your posts:</h3>
-                @if($profile->user->posts->count()==0)
+                @if($posts->isEmpty())
                     <a href="{{route('post.create')}}"> You don't have any post's yet, but you can change it! Make your first!(click on the link) </a>
 
                 @else
@@ -97,6 +94,7 @@
                     </div>
                 </form>
             @endif
+
         @else
             <p>Dear guest, you are not logged in. Please <a href="/login">login</a> or <a href="/register">register</a> to see your profile.</p>
         @endif
