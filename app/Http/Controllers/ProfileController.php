@@ -20,11 +20,16 @@ class ProfileController extends Controller
     }
 
     public function index()
-    {
+    {   if(auth()->user()!==null){
         $userId=auth()->id();
         $profile = Profile::findOrFail($userId);
         $posts = $profile->user->posts()->paginate(6);
         return view('profile.index',compact('posts'));
+        }
+        else{
+            return view('profile.index');
+        }
+
     }
 
     public function create(ProfileStoreRequest $request)
