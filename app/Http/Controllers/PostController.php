@@ -49,14 +49,9 @@ class PostController extends Controller
     }
 
     public function show(Post $post){
-
-        $userId = $post->user_id;
-        $user = User::findOrFail($userId);
-        $profile = $user->profile;
-        $profileId = $profile ? $profile->id : null;
-
-        
-        return view('post.show', compact('post', 'profileId'));
+        $user = $post->user;
+        $postOwnerProfileId = $user && $user->profile ? $user->profile->id : null;
+        return view('post.show', compact('post','postOwnerProfileId'));
     }
 
 
