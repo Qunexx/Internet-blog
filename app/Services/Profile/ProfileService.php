@@ -22,11 +22,15 @@ class ProfileService
         }
 
 
-    public function update($post,$data){
-        $tags=$data['tags'];
-        unset($data['tags']);
-        $post->update($data);
-        $post->fresh();
-        $post->tags()->sync($tags);
+    public function update($profile,$data){
+        $profile->birthday = $data['birthday'] ?? null;
+        $profile->quote = $data['quote'] ?? 'The best user of the best site';
+        $profile->bio = $data['bio'] ?? null;
+        $profile->vk = $data['vk'] ?? null;
+        $profile->telegram = $data['telegram'] ?? null;
+        $profile->github = $data['github'] ?? null;
+        $profile->save();
     }
+
+
 }

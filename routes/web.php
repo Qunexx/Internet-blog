@@ -21,9 +21,10 @@ Route::get('/auth',[AuthController::class,'AuthStatus'])->name('authcheck.index'
 
 
 Route::get('/profile',[ProfileController::class,'index'])->name('profile.index');
-Route::post('/profile/create',[ProfileController::class,'create'])->name('profile.create');
+Route::post('/profile/create',[ProfileController::class,'create'])->name('profile.create')->middleware('auth');;
 Route::get('/profile/{profile}',[ProfileController::class,'show'])->name('profile.show');
-
+Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');;
+Route::put('/profile/{profile}', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');;
 
 
 

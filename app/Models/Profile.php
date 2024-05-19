@@ -11,7 +11,7 @@ class Profile extends Model
 
     protected $guarded = [];
     protected $table = 'profiles';
-    protected $fillable = ['birthday', 'quote', 'bio', 'vk', 'telegram','github'];
+    protected $fillable = ['user_id','birthday', 'quote', 'bio', 'vk', 'telegram','github'];
 
     public function user()
     {

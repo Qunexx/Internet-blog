@@ -3,7 +3,18 @@
 @section('content')
     <div class="container">
         <h1>Welcome to your Profile Page</h1>
-        @if (auth()->check())
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+    @if (auth()->check())
 
             @if ($profile)
                 <h2>{{ auth()->user()->name }}'s Profile</h2>
@@ -14,9 +25,9 @@
                 <p><strong>Telegram:</strong> {{ $profile->telegram }}</p>
                 <p><strong>GitHub:</strong> {{ $profile->github }}</p>
 
+                <a href="{{ route('profile.edit', $profile->id) }}" class="btn btn-primary btn-sm">Edit Profile</a>
 
-
-                <h3>Your posts:</h3>
+                <h3 class="mt-3">Your posts:</h3>
                 @if($posts->isEmpty())
                     <a href="{{route('post.create')}}"> You don't have any post's yet, but you can change it! Make your first!(click on the link) </a>
 
