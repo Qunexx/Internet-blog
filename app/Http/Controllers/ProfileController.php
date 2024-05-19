@@ -47,8 +47,9 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile = Profile::findOrFail($id);
+        $user = $profile->user;
         $posts = $profile->user->posts()->paginate(6);
-        return view('profile.show', compact('profile', 'posts'));
+        return view('profile.show', compact('profile', 'posts', 'user'));
     }
 
     }

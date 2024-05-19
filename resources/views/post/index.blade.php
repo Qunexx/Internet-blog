@@ -3,6 +3,11 @@
 @section('content')
     <div class="container">
         <p>Hello! This is the posts page</p>
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="d-flex align-items-start">
             @if (auth()->check())

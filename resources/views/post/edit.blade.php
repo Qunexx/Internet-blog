@@ -2,6 +2,11 @@
 @section('content')
 <div class="center-both">
     <h1>Post editing form</h1>
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <form action="{{ route('post.update',$post->id)}}" method="post">
       @csrf
       @method('patch')

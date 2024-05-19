@@ -8,12 +8,15 @@ use App\Http\Requests\StoreRequest;
 use App\Http\Requests\UpdateRequest;
 use App\Models\Category;
 use App\Models\PostTag;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Providers\AppServiceProvider;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\Post\PostService;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends Controller
@@ -47,13 +50,24 @@ class PostController extends Controller
 
     public function show(Post $post){
 
-        return view("post.show", compact("post",));
+        $userId = $post->user_id;
+        $user = User::findOrFail($userId);
+        $profile = $user->profile;
+        $profileId = $profile ? $profile->id : null;
 
-
+        
+        return view('post.show', compact('post', 'profileId'));
     }
 
 
     public function edit(Post $post){
+        $userId = auth()->user()->id;
+
+        if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
+            return redirect()->route('posts.index')->with('error', 'У вас недостаточно прав для редактирования поста');
+        }
+
+
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -64,6 +78,12 @@ class PostController extends Controller
 
 
     public function update(UpdateRequest $request,Post $post){
+        $userId = auth()->user()->id;
+
+        if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
+            return redirect()->route('posts.index')->with('error', 'У вас недостаточно прав для редактирования поста');
+        }
+
         $data = $request->validated();
         $this->postService->update($post, $data);
         return redirect()->route('post.show', $post->id);
@@ -74,6 +94,11 @@ class PostController extends Controller
 
 
 public function destroy(Post $post){
+    $userId = auth()->user()->id;
+
+    if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
+        return redirect()->route('posts.index')->with('error', 'У вас недостаточно прав для редактирования поста');
+    }
     $post->delete();
 
     //Для восстановления после мягкого удаления

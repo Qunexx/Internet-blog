@@ -20,7 +20,7 @@
 
 
                 <h3>Your posts:</h3>
-                @if($profile->user->posts->count())
+                @if($profile->user->posts->count()==0)
                     <a href="{{route('post.create')}}"> You don't have any post's yet, but you can change it! Make your first!(click on the link) </a>
 
                 @else
