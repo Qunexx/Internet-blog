@@ -29,11 +29,11 @@ class LikeController extends Controller
 
     public function unlike(Post $post)
     {
-        $user = Auth::user();
+        $userId = auth()->user()->id;
 
-        DB::transaction(function () use ($post, $user) {
-            if ($post->isLikedBy($user)) {
-                $post->likes()->where('user_id', $user->id)->delete();
+        DB::transaction(function () use ($post, $userId) {
+            if ($post->isLikedBy($userId)) {
+                $post->likes()->where('user_id', $userId)->delete();
 
                 // Уменьшаем количество лайков в таблице posts
                 $post->decrement('likes');
