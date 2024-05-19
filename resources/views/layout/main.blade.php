@@ -19,13 +19,15 @@
                             <a class="nav-link active" href="{{ route('main.index') }}" aria-current="page">Main</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('profile.index') }}" aria-current="page">Profile</a>
+                            <a class="nav-link active" href="{{ route('profile.index') }}"
+                               aria-current="page">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ route('posts.index') }}" aria-current="page">Posts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('contacts.index') }}" aria-current="page">Contacts</a>
+                            <a class="nav-link active" href="{{ route('contacts.index') }}"
+                               aria-current="page">Contacts</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ route('authcheck.index') }}" aria-current="page">AuthStatus</a>
@@ -55,7 +57,8 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
 
@@ -77,9 +80,8 @@
         </nav>
 
 
-
     </div>
- @yield('content')
+    @yield('content')
 </div>
 </body>
 </html>

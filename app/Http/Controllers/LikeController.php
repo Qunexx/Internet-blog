@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\DB;
 
 class LikeController extends Controller
 {
-     public function like(Post $post)
-{
-    $user = Auth::user();
+    public function like(Post $post)
+    {
+        $user = Auth::user();
 
-    DB::transaction(function () use ($post, $user) {
-        if (!$post->isLikedBy($user)) {
-            $post->likes()->create([
-                'user_id' => $user->id,
-            ]);
+        DB::transaction(function () use ($post, $user) {
+            if (!$post->isLikedBy($user)) {
+                $post->likes()->create([
+                    'user_id' => $user->id,
+                ]);
 
-            // Увеличиваем количество лайков в таблице posts
-            $post->increment('likes');
-        }
-    });
+                // Увеличиваем количество лайков в таблице posts
+                $post->increment('likes');
+            }
+        });
 
-    return back();
-}
+        return back();
+    }
 
     public function unlike(Post $post)
     {

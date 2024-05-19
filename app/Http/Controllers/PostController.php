@@ -22,40 +22,47 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     public $postService;
-    public function __construct(PostService $postService) {
+
+    public function __construct(PostService $postService)
+    {
         $this->postService = $postService;
     }
 
-    public function index(FilterRequest $request){
+    public function index(FilterRequest $request)
+    {
         $data = $request->validated();
-        $filter = app()->make(PostFilter::class,['queryParams' => array_filter($data)]);
+        $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
         $posts = Post::filter($filter)->paginate(10);
         $categories = Category::all();
 
-        return view("post.index", compact("posts","categories"));
+        return view("post.index", compact("posts", "categories"));
     }
 
-    public function create(){
+    public function create()
+    {
         $categories = Category::all();
         $tags = Tag::all();
-        return view("post.create", compact("categories","tags"));
+        return view("post.create", compact("categories", "tags"));
     }
 
-    public function store(StoreRequest $request){
+    public function store(StoreRequest $request)
+    {
 
         $data = $request->validated();
         $this->postService->store($data);
         return redirect()->route('posts.index');
     }
 
-    public function show(Post $post){
+    public function show(Post $post)
+    {
         $user = $post->user;
         $postOwnerProfileId = $user && $user->profile ? $user->profile->id : null;
-        return view('post.show', compact('post','postOwnerProfileId'));
+        return view('post.show', compact('post', 'postOwnerProfileId'));
     }
 
 
-    public function edit(Post $post){
+    public function edit(Post $post)
+    {
         $userId = auth()->user()->id;
 
         if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
@@ -66,13 +73,14 @@ class PostController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view("post.edit", compact("post","categories","tags"));
+        return view("post.edit", compact("post", "categories", "tags"));
 
 
     }
 
 
-    public function update(UpdateRequest $request,Post $post){
+    public function update(UpdateRequest $request, Post $post)
+    {
         $userId = auth()->user()->id;
 
         if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
@@ -84,24 +92,24 @@ class PostController extends Controller
         return redirect()->route('post.show', $post->id);
 
 
-}
-
-
-
-public function destroy(Post $post){
-    $userId = auth()->user()->id;
-
-    if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
-        return redirect()->route('posts.index')->with('error', 'У вас недостаточно прав для редактирования поста');
     }
-    $post->delete();
 
-    //Для восстановления после мягкого удаления
-    //$post = Post::withTrashed()->find(1);
-    //$post->restore();
 
-    return redirect()->route('posts.index');
-}
+    public function destroy(Post $post)
+    {
+        $userId = auth()->user()->id;
+
+        if ($post->user_id !== $userId && auth()->user()->role !== 'admin') {
+            return redirect()->route('posts.index')->with('error', 'У вас недостаточно прав для редактирования поста');
+        }
+        $post->delete();
+
+        //Для восстановления после мягкого удаления
+        //$post = Post::withTrashed()->find(1);
+        //$post->restore();
+
+        return redirect()->route('posts.index');
+    }
 
 
 }

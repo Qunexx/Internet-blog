@@ -11,21 +11,23 @@
 
         <div class="d-flex align-items-start">
             @if (auth()->check())
-            <div class="mr-5">
-                <a href="{{ route('post.create') }}" class="btn btn-primary mb-3">Add post</a>
-            </div>
+                <div class="mr-5">
+                    <a href="{{ route('post.create') }}" class="btn btn-primary mb-3">Add post</a>
+                </div>
             @endif
 
             <div class="ms-lg-5">
                 <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
-                <input type="text" class="form-control mr-2" name="title" placeholder="Title" value="{{ request('title') }}">
-                <select class="form-control mr-2" name="category_id">
-                    <option value="">All Categories</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
-                    @endforeach
-                </select>
-                <button type="submit" class="btn btn-primary">Search</button>
+                    <input type="text" class="form-control mr-2" name="title" placeholder="Title"
+                           value="{{ request('title') }}">
+                    <select class="form-control mr-2" name="category_id">
+                        <option value="">All Categories</option>
+                        @foreach ($categories as $category)
+                            <option
+                                value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
         </div>
